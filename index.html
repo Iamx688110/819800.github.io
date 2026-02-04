@@ -38,7 +38,7 @@
         alt="博客头像" 
         class="w-24 h-24 rounded-full mb-4 border-2 border-gray-200 shadow-sm"
       >
-      <h1 id="blog-title" class="text-2xl font-bold mb-4">陈金福的78小博客</h1>
+      <h1 id="blog-title" class="text-2xl font-bold mb-4">陈金福的78小博客 - 登录</h1>
       <div id="printer-container" class="text-lg font-medium"></div>
     </div>
 
@@ -140,7 +140,7 @@
         </div>
       </div>
 
-      <!-- 公告栏（占另一半） -->
+      <!-- 公告栏 -->
       <div class="w-1/2">
         <div class="bg-white p-8 rounded-lg shadow-md h-full">
           <h2 class="text-xl font-bold mb-6 flex items-center gap-2">
@@ -154,16 +154,16 @@
     </div>
   </div>
 
-  <!-- 登录后容器（默认隐藏） - 关键修改：移除container限制，取消px-4内边距 -->
+  <!-- 登录后容器（默认隐藏） -->
   <div id="auth-container" class="w-full py-4 hidden">
-    <!-- 头部：欢迎语 + 退出按钮 - 关键修改：调整内边距和宽度 -->
+    <!-- 头部：欢迎语 + 退出按钮  -->
     <div class="bg-white shadow-sm rounded-lg p-4 mb-4 flex justify-between items-center mx-4">
       <h2 id="welcome-text" class="text-xl font-bold"></h2>
       <button id="logout-btn" class="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors flex items-center gap-2">
         <i class="fa fa-sign-out"></i> 退出登录
       </button>
     </div>
-    <!-- 全屏博客内容框 - 关键修改：移除rounded-lg和shadow-md的左右边距，占满宽度 -->
+ 
     <div class="bg-white overflow-hidden w-full">
       <iframe 
         src="https://iamx688110.github.io" 
@@ -174,43 +174,39 @@
   </div>
 
   <script>
-    // 全局变量
-    let currentCaptcha = ''; // 登录验证码
-    let currentRegCaptcha = ''; // 注册验证码
+    let currentCaptcha = '';
+    let currentRegCaptcha = ''; 
     const printerTexts = [
-      "欢迎来到78小博客~",
-      "在这里记录生活与学习",
-      "注册账号即可解锁全部内容",
-      "安全登录，保护你的隐私",
-      "每一次访问都是新的开始"
+      "删繁就简三秋树，代码精简一行足~",
+      "删繁就简三秋树，代码精简一行足~",
+      "删繁就简三秋树，代码精简一行足~",
+      "删繁就简三秋树，代码精简一行足~",
+      "删繁就简三秋树，代码精简一行足~"
     ];
 
-    // ====================== 初始化 ======================
+    
     window.onload = function() {
-      // 1. 加载公告
+      
       loadAnnouncements();
-      // 2. 初始化验证码
+    
       refreshCaptcha();
       refreshRegCaptcha();
-      // 3. 启动打印机文字效果
+    
       startPrinterEffect();
-      // 4. 绑定登录/注册/退出事件
+     
       bindEvents();
-      // 5. 检查是否已登录（刷新页面后保持登录状态）
       checkLoginStatus();
     };
 
-    // ====================== 多用户存储核心方法 ======================
-    // 1. 获取所有用户（合并初始用户+本地注册用户）
+  
     function getAllUsers() {
-      // 从localStorage读取已注册用户
+    
       const localUsers = JSON.parse(localStorage.getItem('blogUsers')) || [];
-      // 从config.json读取初始用户（如果需要）
-      // 这里可替换为实际的config.json请求，示例中直接写死初始用户
+ 
       const defaultUsers = [
-        { username: "admin", password: "Admin123456" }
+        { username: "shiyong", password: "123456" }
       ];
-      // 合并并去重（避免初始用户重复）
+
       const allUsers = [...defaultUsers];
       localUsers.forEach(user => {
         if (!allUsers.some(u => u.username === user.username)) {
@@ -220,36 +216,34 @@
       return allUsers;
     }
 
-    // 2. 保存新用户到localStorage（支持多用户）
+
     function saveNewUser(username, password) {
       const localUsers = JSON.parse(localStorage.getItem('blogUsers')) || [];
-      // 检查是否重名（核心：多用户不重复）
+
       if (localUsers.some(user => user.username === username)) {
         return { success: false, message: "用户名已存在" };
       }
-      // 添加新用户
+
       localUsers.push({ username, password });
       localStorage.setItem('blogUsers', JSON.stringify(localUsers));
       return { success: true, message: "注册成功" };
     }
 
-    // 3. 验证用户登录（支持多用户校验）
+ 
     function verifyUser(username, password) {
       const allUsers = getAllUsers();
       const user = allUsers.find(u => u.username === username && u.password === password);
-      return !!user; // 存在则返回true，否则false
+      return !!user; 
     }
 
-    // ====================== 公告加载 ======================
+    
     function loadAnnouncements() {
-      // 模拟从config.json加载公告（GitHub Pages可直接请求）
-      // 实际可替换为fetch('config.json').then(...)
       const announcements = [
-        "欢迎访问78小博客，使用前请完成注册登录",
-        "本博客仅用于学习交流，请勿发布违规内容",
-        "忘记密码请联系管理员重置",
-        "注册时密码需包含字母+数字，长度≥8位",
-        "登录后可访问完整博客内容"
+        "欢迎访问78小博客~",
+        "本博客仅用于学习交流，发布内容需要一个GitHub账号",
+        "注意：本应用的注册都是一次性的！ 下次访问时需重新注册临时账户",
+        "✅️ 现推出一个永久账户供大家食用。用户名：shiyong，登录密码：123456",
+        "✅️ 需要永久账户的特殊用户请咨询 @珍珠工作室 获取，包免费"
       ];
       
       const announcementList = document.getElementById('announcement-list');
@@ -265,7 +259,7 @@
       });
     }
 
-    // ====================== 验证码生成 ======================
+  
     function generateCaptcha() {
       const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
       let captcha = '';
@@ -285,7 +279,7 @@
       document.getElementById('reg-captcha-img').textContent = currentRegCaptcha;
     }
 
-    // ====================== 打印机文字效果 ======================
+   
     function startPrinterEffect() {
       const container = document.getElementById('printer-container');
       let textIndex = 0;
@@ -295,22 +289,22 @@
       function typeWriter() {
         const currentText = printerTexts[textIndex];
         if (!isDeleting) {
-          // 打字阶段
+        
           container.textContent = currentText.substring(0, charIndex + 1);
           container.classList.add('printer-text');
           charIndex++;
           if (charIndex === currentText.length) {
-            // 打完后停顿2秒
+            
             setTimeout(() => { isDeleting = true; }, 2000);
           } else {
             setTimeout(typeWriter, 150);
           }
         } else {
-          // 删除阶段
+        
           container.textContent = currentText.substring(0, charIndex - 1);
           charIndex--;
           if (charIndex === 0) {
-            // 删完后切换文字
+           
             isDeleting = false;
             textIndex = (textIndex + 1) % printerTexts.length;
             setTimeout(typeWriter, 500);
@@ -322,7 +316,7 @@
       typeWriter();
     }
 
-    // ====================== 密码强度检测 ======================
+   
     function checkPasswordStrength(password) {
       let strength = 0;
       // 长度≥8
@@ -334,7 +328,7 @@
       // 包含特殊字符（可选）
       if (/[^a-zA-Z0-9]/.test(password)) strength += 1;
 
-      // 更新强度条和文字
+      
       const bar = document.getElementById('password-strength-bar');
       const text = document.getElementById('password-strength-text');
       const width = (strength / 4) * 100;
@@ -360,14 +354,14 @@
       return strength >= 2; // 至少中等强度才能注册
     }
 
-    // ====================== 事件绑定 ======================
+  
     function bindEvents() {
       // 1. 密码强度检测事件
       document.getElementById('reg-password').addEventListener('input', function(e) {
         checkPasswordStrength(e.target.value);
       });
 
-      // 2. 用户名查重事件
+     
       document.getElementById('reg-username').addEventListener('blur', function(e) {
         const username = e.target.value.trim();
         const tip = document.getElementById('username-tip');
@@ -389,7 +383,7 @@
         }
       });
 
-      // 3. 登录按钮事件
+    
       document.getElementById('login-btn').addEventListener('click', function() {
         const username = document.getElementById('login-username').value.trim();
         const password = document.getElementById('login-password').value.trim();
@@ -406,9 +400,9 @@
           return;
         }
 
-        // 验证用户（支持多用户）
+      
         if (verifyUser(username, password)) {
-          // 登录成功：保存登录状态
+         
           localStorage.setItem('loggedUser', username);
           showAuthContainer(username);
         } else {
@@ -417,13 +411,13 @@
         }
       });
 
-      // 4. 注册按钮事件
+   
       document.getElementById('register-btn').addEventListener('click', function() {
         const username = document.getElementById('reg-username').value.trim();
         const password = document.getElementById('reg-password').value.trim();
         const captcha = document.getElementById('reg-captcha').value.trim().toUpperCase();
 
-        // 基础校验
+
         if (!username || !password) {
           alert('用户名或密码不能为空！');
           return;
@@ -434,18 +428,18 @@
           return;
         }
 
-        // 密码强度校验
+   
         if (!checkPasswordStrength(password)) {
-          alert('密码强度不足！需包含字母+数字，长度≥8位');
+          alert('你是猪儿吧？需包含字母+数字，长度≥8位');
           return;
         }
 
-        // 保存新用户（多用户逻辑）
+
         const result = saveNewUser(username, password);
         if (result.success) {
           alert('注册成功！请登录');
-          showLogin(); // 切回登录页
-          // 清空注册表单
+          showLogin(); 
+
           document.getElementById('reg-username').value = '';
           document.getElementById('reg-password').value = '';
           document.getElementById('reg-captcha').value = '';
@@ -455,10 +449,10 @@
         }
       });
 
-      // 5. 退出按钮事件
+
       document.getElementById('logout-btn').addEventListener('click', function() {
         localStorage.removeItem('loggedUser');
-        // 重置并显示未登录容器
+ 
         document.getElementById('auth-container').classList.add('hidden');
         document.getElementById('unauth-container').classList.remove('hidden');
         document.getElementById('login-username').value = '';
@@ -468,7 +462,7 @@
       });
     }
 
-    // ====================== 页面切换 ======================
+
     function showRegister() {
       document.getElementById('login-form').classList.add('hidden');
       document.getElementById('register-form').classList.remove('hidden');
@@ -480,14 +474,14 @@
     }
 
     function showAuthContainer(username) {
-      // 隐藏未登录容器，显示登录后容器
+
       document.getElementById('unauth-container').classList.add('hidden');
       document.getElementById('auth-container').classList.remove('hidden');
-      // 设置欢迎语
-      document.getElementById('welcome-text').textContent = `欢迎 ${username} 登录78小博客`;
+ 
+      document.getElementById('welcome-text').textContent = `欢迎 ${username} 登录！多看看哦~`;
     }
 
-    // 检查登录状态（刷新页面后保持）
+
     function checkLoginStatus() {
       const loggedUser = localStorage.getItem('loggedUser');
       if (loggedUser) {
@@ -498,3 +492,4 @@
 </body>
 
 </html>
+
